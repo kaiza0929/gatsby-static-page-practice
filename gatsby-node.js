@@ -1,7 +1,11 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/node-apis/
- */
-
-// You can delete this file if you're not using it
+/* 動的なページの作成 */
+module.exports = ({ actions }) => {
+    const { createPage } = actions;
+    createPage({
+        path: "/article",
+        component: Article,
+        context: {
+            id: "332"
+        }
+    });
+}
