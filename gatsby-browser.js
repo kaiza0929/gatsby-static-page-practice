@@ -1,7 +1,4 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/browser-apis/
- */
+import ProviderComponent from "./src/provider";
 
-// You can delete this file if you're not using it
+/* 変数名はこれ固定(wrapRootElementというAPIを利用) */
+export const wrapRootElement = ProviderComponent;

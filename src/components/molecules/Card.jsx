@@ -5,9 +5,9 @@ import Paragraph from "./../atoms/Paragraph";
 import Button from "./../atoms/Button";
 import "./Card.css";
 
-var Card = ({ card_image_src, card_title, card_texts }) => {
+var Card = ({ cards_class_name, card_image_src, card_title, card_texts }) => {
     return (
-        <div className="card mb-3" style={{marginBottom: "2%", width: "80%"}}>
+        <div className={cards_class_name} style={{marginBottom: "2%", width: "80%"}}>
             <div className="row no-gutters">
                 <div className="col-md-4">
                     <Image className="bd-placeholder-img" src={card_image_src} />
