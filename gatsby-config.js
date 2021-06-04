@@ -12,17 +12,13 @@ module.exports = {
       /* 複数指定可 */
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `articles`,
-        path: `${__dirname}/src/articles`,
-      },
+        name: `assets`,
+        path: `${__dirname}/src/assets`,
+      }
     },
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
+    `gatsby-transformer-json`,
     `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,

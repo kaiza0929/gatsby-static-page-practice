@@ -5,3 +5,5 @@ stateを使用しなければコンポーネントにコンストラクタは不
 =>クラスコンポーネントでは同じ値をthis.props.変数で取得できる<br>
 makeStyles()やuseStaticQuery()など関数コンポーネントでしか使えないメソッドあり<br>
 =>前者はwithStyle()後者はStaticQueryコンポーネントで代用<br>
+cssのクラス名に空白が含まれている => 2つのクラスが付与されているという意味<br>
+class="card mb-3" => .card.mb-3 {}という書き方をする<br>

@@ -1,97 +1,52 @@
-import React from "react";
-import Layout from "./../components/layout";
-import { withStyles, TextField, Card, CardActionArea, CardContent, Typography, Button } from "@material-ui/core";
-import { navigate, graphql } from "gatsby";
+import React, { useState, useEffect } from "react";
+import Header from "./../components/organisms/Header";
+import ArticleList from "./../components/organisms/ArticleList";
+import { graphql } from "gatsby";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-var styles = theme => ({
-    card: {
-       marginBottom: "2%",
-       width: "80%"
-    },
-    cardActionArea: {
-       // display: "flex"
-    },
-    cardImage: {
-        width: "40%"
-    }
-});
+var Index = ({ data }) => {
 
-class Index extends React.Component {
+    var [state, setState] = useState({
+        articles: []
+    });
 
-    constructor(props) {
-        super(props);
-        this.state = {keyword: "", start_index: 0};
-    }
+    useEffect(() => {
+        /*
+        axios.get("https://newsapi.org/v2/everything?q=Apple&from=2021-06-04&sortBy=popularity&apiKey=d9ed1a79e82749b58e7414386464aad5")
+        .then((res) => console.log(res.data.articles))
+        .catch((err) => alert(err));
+        */
+        setState({...state, articles: data.allAssetsJson.edges[0].node.articles});
+    }, []);
 
-    render() {
-
-        var { classes } = this.props;
-
-        return (
-            <Layout>
-                <div style={{width: "80%"}}>
-                    <h2>最新記事</h2>
-                    <div style={{width: "100%"}}>
-                        <TextField id="filled-basic" label="Filled" variant="filled" onKeyUp={(e) => this.setState({keyword: e.target.value})} />
-                    </div>
-                    <div>
-                        {this.props.data.allMarkdownRemark.nodes.slice(this.state.start_index, this.state.start_index + 5).map((node) => {
-                            if (node.frontmatter.title.match(this.keyword) !== null || node.html.match(this.keyword) !== null) {
-                                var date = new Date(node.frontmatter.date);
-                                return (
-                                    <Card key={node.id} className={classes.card}>
-                                        <CardActionArea className={classes.cardActionArea} onClick={() => navigate(`/article?id=${node.id}`)}>
-                                            {/*<CardMedia image={NoImage} className={classes.cardImage} alt="no image" />*/}
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h5" component="h2">
-                                                    { node.frontmatter.title }
-                                                </Typography>
-                                                 <Typography gutterBottom variant="h6" component="h3">
-                                                    { node.frontmatter.description }
-                                                </Typography>
-                                                <Typography gutterBottom variant="h6" component="h6">
-                                                    { date.getFullYear() + "/" + (date.getMonth() + 1).toString() + "/" + date.getDate()}
-                                                </Typography>
-                                            </CardContent>
-                                        </CardActionArea>
-                                    </Card>
-                                );
-                            }
-                        })}
-                    </div>
-                    <div>
-                        {this.state.start_index >= 5 && (
-                            <Button variant="contained" color="primary" onClick={() => this.setState({start_index: this.state.start_index - 5})}>
-                                前の5件
-                            </Button>
-                        )}
-                        {this.state.start_index + 5 <= this.props.data.allMarkdownRemark.nodes.length - 1 && (
-                            <Button variant="contained" color="primary" onClick={() => this.setState({start_index: this.state.start_index + 5})}>
-                                次の5件
-                            </Button>
-                        )}
-                    </div>
-                </div>
-            </Layout>
-        );
-
-    }
+    return (
+        <>
+            <Header />
+            <ArticleList articles={state.articles}/>
+        </>
+    );
 }
 
+/* jsonのリストに格納された各オブジェクトから特定プロパティの値だけを抜き出している */
 export const query = graphql`
     query {
-        allMarkdownRemark {
-            nodes {
-                id
-                html
-                frontmatter {
-                    date
-                    title
-                    description
+        allAssetsJson {
+            edges {
+                node {
+                    articles {
+                        title
+                        content
+                        publishedAt
+                        url
+                        source {
+                            name
+                        }
+                        urlToImage
+                    }
                 }
             }
         }
     }
 `
 
-export default withStyles(styles, { withTheme: true })(Index);
+export default Index;
