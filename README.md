@@ -8,3 +8,4 @@ makeStyles()やuseStaticQuery()など関数コンポーネントでしか使え�
 cssのクラス名に空白が含まれている => 2つのクラスが付与されているという意味<br>
 class="card mb-3" => .card.mb-3 {}という書き方をする<br>
 gatsby buildしないとgithub pagesで見れない<br>
+=>root
